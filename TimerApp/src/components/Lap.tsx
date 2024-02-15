@@ -36,7 +36,9 @@ export default function Lap() {
                 marginVertical: 10,
               }}>
               <Text style={{color: 'white'}}>{item.item}</Text>
-              <Text style={{color: 'white'}}>{item.length - item.index}</Text>
+              <Text style={{color: 'white'}}>
+                {lapData.length - item.index}
+              </Text>
             </View>
           );
         }}
