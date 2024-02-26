@@ -4,18 +4,27 @@ import {colors} from '../utilities/style';
 
 const {height, width} = Dimensions.get('screen');
 
-export default function Lap() {
-  const [lapData, setLapData] = useState([
-    '01:10:90',
-    '02:10:90',
-    '02:10:90',
-    '02:10:90',
-    '02:10:90',
-    '02:10:90',
-    '02:10:90',
-    '02:10:90',
-    '02:10:90',
-  ]);
+export default function Lap({results}) {
+  const padToTwo = number => (number <= 9 ? `0${number}` : number);
+
+  const displayTime = centiseconds => {
+    let minutes = 0;
+    let seconds = 0;
+
+    if (centiseconds < 0) {
+      centiseconds = 0;
+    }
+
+    let remainCentiseconds = centiseconds % 100;
+    seconds = (centiseconds - remainCentiseconds) / 100;
+
+    let remainSeconds = seconds % 60;
+    minutes = (seconds - remainSeconds) / 60;
+
+    return `${padToTwo(minutes)}:${padToTwo(remainSeconds)}:${padToTwo(
+      remainCentiseconds,
+    )}`;
+  };
 
   return (
     <View style={style.container}>
@@ -25,7 +34,7 @@ export default function Lap() {
       </View>
 
       <FlatList
-        data={lapData}
+        data={results}
         renderItem={item => {
           return (
             <View
@@ -35,9 +44,9 @@ export default function Lap() {
                 width: width,
                 marginVertical: 10,
               }}>
-              <Text style={{color: 'white'}}>{item.item}</Text>
+              <Text style={{color: 'white'}}>{displayTime(item.item)}</Text>
               <Text style={{color: 'white'}}>
-                {lapData.length - item.index}
+                {results.length - item.index}
               </Text>
             </View>
           );

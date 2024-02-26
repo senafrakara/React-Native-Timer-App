@@ -1,22 +1,43 @@
-import {View, Text, StyleSheet, Dimensions} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+} from 'react-native';
 import React, {useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {colors} from '../utilities/style';
 
 const {height, width} = Dimensions.get('screen');
 
-export default function ButtonControllers() {
+export default function ButtonControllers({
+  isRunning,
+  handleStart,
+  handleLap,
+  handleStop,
+}) {
   return (
     <View style={style.container}>
-      <View style={[style.buttonContainer, {backgroundColor: colors.color4}]}>
+      <TouchableOpacity
+        style={[style.buttonContainer, {backgroundColor: colors.color4}]}
+        onPress={() => handleStop()}>
         <Icon name="stop" color={'#fff'} size={15} />
-      </View>
-      <View style={[style.buttonContainer, {backgroundColor: colors.color2}]}>
-        <Icon name="play" color={colors.color3} size={15} />
-      </View>
-      <View style={[style.buttonContainer, {backgroundColor: colors.color4}]}>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={[style.buttonContainer, {backgroundColor: colors.color2}]}
+        onPress={() => handleStart()}>
+        <Icon
+          name={isRunning ? 'pause' : 'play'}
+          color={colors.color3}
+          size={15}
+        />
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={[style.buttonContainer, {backgroundColor: colors.color4}]}
+        onPress={() => handleLap()}>
         <Icon name="step-forward" color={'#fff'} size={15} />
-      </View>
+      </TouchableOpacity>
     </View>
   );
 }
